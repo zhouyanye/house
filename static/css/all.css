@@ -1,0 +1,87 @@
+.attribute-header {
+    font-size: 48px;
+    padding-bottom: 10px;
+    margin-left: 12px;
+}
+/*家电图标*/
+.icon-1{
+     width: 28px;
+     height: 45px;
+     margin: 0 auto 5px;
+     background: url("../img/bx.png") no-repeat;
+     display: block; /*  将span内联元素转换块元素*/
+}
+.icon-2{
+     width: 36px;
+     height: 46px;
+     margin: 0 auto 5px;
+     background: url("../img/xyj.png") no-repeat;
+     display: block; /*  将span内联元素转换块元素*/
+}
+.icon-3{
+    width: 46px;
+     height: 45px;
+     margin: 0 auto 5px;
+     background: url("../img/ds.png") no-repeat;
+     display: block;
+}
+.icon-4{
+    width: 46px;
+     height: 31px;
+     margin: 0 auto 5px;
+     background: url("../img/kt.png") no-repeat;
+     display: block;
+}
+.icon-5{
+    width: 28px;
+     height: 41px;
+     margin: 0 auto 5px;
+     background: url("../img/nq.png") no-repeat;
+     display: block;
+}
+
+.icon-6{
+    width: 46px;
+     height: 35px;
+    margin: 0 auto 5px;
+    background: url("../img/rsq.png") no-repeat;
+    display: block;
+}
+.icon-7{
+    width: 46px;
+     height: 35px;
+    margin: 0 auto 5px;
+    background: url("../img/trq.png") no-repeat;
+    display: block;
+}
+.icon-8{
+    width: 51px;
+     height: 36px;
+    margin: 0 auto 5px;
+    background: url("../img/chuang.png") no-repeat;
+    display: block;
+}
+.icon-9{
+    width: 48px;
+     height: 36px;
+    margin: 0 auto 5px;
+    background: url("../img/wifi.png") no-repeat;
+    display: block;
+}
+.icon-10{
+    width: 46px;
+     height: 44px;
+    margin: 0 auto 5px;
+    background: url("../img/dt.png") no-repeat;
+    display: block;
+}
+
+
+.attribute-text-sm {
+            font-size: 14px;
+            color:black;
+            line-height: 25px;
+            text-align: center;
+            margin: 0 auto;
+            display: block;
+}

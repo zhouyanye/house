@@ -1,0 +1,16 @@
+body {
+    font-size: 20px;
+    color: #212529;
+    font-family: 'Lora', 'Times New Roman', serif;
+}
+a{
+    text-decoration: none;  //去除下划线
+}
+h1,h2,h3,h4{
+    font-weight:bold
+}
+.area-info{
+    margin-top: 20px;
+    border-bottom: 1px solid #eaecef;
+    padding-left: 10px ;
+}

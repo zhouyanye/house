@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表页</title>
+    <!--图标-->
+    <link rel="icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
+    <!--引入bootstrap文件的css-->
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!--引入bootstrap中的bootstrap.min.js   jquery.js必须要放在bootstrap.min前面-->
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <!--引入自定义的css-->
+    <link rel="stylesheet" href="../static/css/index.css">
+    <style>
+        .login {
+            width: 380px;
+            margin: 150px auto;
+            border: 1px solid #ddd;
+            padding: 0 15px;
+        }
+
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+        }
+
+        .pagination li {
+            display: inline;
+            margin: 0 5px;
+        }
+
+        .house-info {
+            padding-top: 20px;
+        }
+
+        .house-info .title a {
+            font-weight: bold;
+            font-size: 28px;
+        }
+
+        .house-info > div {
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .price {
+            color: red;
+            padding-top: 20px;
+        }
+
+        .house-contact button {
+            margin-top: 40px;
+        }
+
+        .icon-img {
+            margin-top: 80px;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">智能选房</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">首页</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+                <li><a href="#">注销</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">关于我 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--Model 模态登录框-->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: pink;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
+                                                              data-toggle="tab">登录</a></li>
+
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab"
+                                               data-toggle="tab">注册</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <form action="/user_page/login" method="post">
+                            <div class="form-group">
+                                <label for="username">用户名</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input type="text" class="form-control" id="password" placeholder="至少输入6位字母或数字">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">密码</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" placeholder="至少输入6位字母或数字">
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <a href="/user_page/register">还没有账号？点我注册</a>
+                            </div>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">登录</button>
+                                <button type="reset" class="btn btn-danger">重置</button>
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">忘记密码</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="profile">
+                        <form action="/user_page/register" method="post">
+                            <div class="form-group">
+                                <label for="username">用户名</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input type="text" class="form-control" id="username" placeholder="6-15位字母或数字">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">密码</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" placeholder="至少输入6位字母或数字">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password2">再次输入密码</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input type="password" class="form-control" id="password2"
+                                           placeholder="至少输入6位字母或数字">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">邮箱</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" placeholder="例如123@123.com">
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <a href="/user_page/login">已有帐号？点我登录</a>
+                            </div>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--banner页面-->
+<header class="" style="background:url('../static/img/home-bg.jpg') no-repeat center center;background-size:cover">
+    <div class="container">
+        <div class="row">
+            <div class="site-heading" style="height:300px">
+                <h1>二手好房</h1>
+                <span class="subheading">给您推荐优质房源</span>
+            </div>
+        </div>
+    </div>
+</header>
+<!--轮播图-->
+
+
+<!--主体内容-->
+<div class="container">
+    <div class="row">
+        <!--左侧-->
+        <div class="col-md-5 col-lg-5">
+            <a href="#">
+                <img class="img-thumbnail" src="../static/img/house-bg1.jpg">
+            </a>
+        </div>
+        <!--中间-->
+        <div class="col-md-5 col-lg-5">
+            <div class="house-info">
+                <div class="title">
+                    <span><a href="#">管道区社区一室一厅46平方</a></span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+            </div>
+            <div>
+                <span class="glyphicon glyphicon-heart" style="color:red"></span>
+                <span class="info-text">15556人浏览</span>
+            </div>
+        </div>
+        <!--右侧-->
+        <div class="col-md-2 col-lg-2">
+            <div class="price">
+                <span class="price-text">￥2000</span>
+                <span class="price-unit">元/月</span>
+            </div>
+            <div class="house-contact">
+                <a href>
+                    <button type="button" class="btn btn-primary">联系房东</button>
+                </a>
+            </div>
+
+
+            <div class="icon-img">
+                <a href="#"><span class="glyphicon glyphicon-arrow-right" style="color: blue"></span></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <!--左侧-->
+        <div class="col-md-5 col-lg-5">
+            <a href="#">
+                <img class="img-thumbnail" src="../static/img/house-bg1.jpg">
+            </a>
+        </div>
+        <!--中间-->
+        <div class="col-md-5 col-lg-5">
+            <div class="house-info">
+                <div class="title">
+                    <span><a href="#">管道区社区一室一厅46平方</a></span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+            </div>
+            <div>
+                <span class="glyphicon glyphicon-heart" style="color:red"></span>
+                <span class="info-text">15556人浏览</span>
+            </div>
+        </div>
+        <!--右侧-->
+        <div class="col-md-2 col-lg-2">
+            <div class="price">
+                <span class="price-text">￥2000</span>
+                <span class="price-unit">元/月</span>
+            </div>
+            <div class="house-contact">
+                <a href>
+                    <button type="button" class="btn btn-primary">联系房东</button>
+                </a>
+            </div>
+
+            <div class="icon-img">
+                <a href="#"><span class="glyphicon glyphicon-arrow-right" style="color: blue"></span></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <!--左侧-->
+        <div class="col-md-5 col-lg-5">
+            <a href="#">
+                <img class="img-thumbnail" src="../static/img/house-bg1.jpg">
+            </a>
+        </div>
+        <!--中间-->
+        <div class="col-md-5 col-lg-5">
+            <div class="house-info">
+                <div class="title">
+                    <span><a href="#">管道区社区一室一厅46平方</a></span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+            </div>
+            <div>
+                <span class="glyphicon glyphicon-heart" style="color:red"></span>
+                <span class="info-text">15556人浏览</span>
+            </div>
+        </div>
+        <!--右侧-->
+        <div class="col-md-2 col-lg-2">
+            <div class="price">
+                <span class="price-text">￥2000</span>
+                <span class="price-unit">元/月</span>
+            </div>
+            <div class="house-contact">
+                <a href>
+                    <button type="button" class="btn btn-primary">联系房东</button>
+                </a>
+            </div>
+
+            <div class="icon-img">
+                <a href="#"><span class="glyphicon glyphicon-arrow-right" style="color: blue"></span></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <!--左侧-->
+        <div class="col-md-5 col-lg-5">
+            <a href="#">
+                <img class="img-thumbnail" src="https://img.zcool.cn/community/01a4d65c6656b0a801203d226ab16d.png@3000w_1l_0o_100sh.png">
+            </a>
+        </div>
+        <!--中间-->
+        <div class="col-md-5 col-lg-5">
+            <div class="house-info">
+                <div class="title">
+                    <span><a href="#">管道区社区一室一厅46平方</a></span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+            </div>
+            <div>
+                <span class="glyphicon glyphicon-heart" style="color:red"></span>
+                <span class="info-text">15556人浏览</span>
+            </div>
+        </div>
+        <!--右侧-->
+        <div class="col-md-2 col-lg-2">
+            <div class="price">
+                <span class="price-text">￥2000</span>
+                <span class="price-unit">元/月</span>
+            </div>
+            <div class="house-contact">
+                <a href>
+                    <button type="button" class="btn btn-primary">联系房东</button>
+                </a>
+            </div>
+
+            <div class="icon-img">
+                <a href="#"><span class="glyphicon glyphicon-arrow-right" style="color: blue"></span></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <!--左侧-->
+        <div class="col-md-5 col-lg-5">
+            <a href="#">
+                <img class="img-thumbnail" src="../static/img/house-bg1.jpg">
+            </a>
+        </div>
+        <!--中间-->
+        <div class="col-md-5 col-lg-5">
+            <div class="house-info">
+                <div class="title">
+                    <span><a href="#">管道区社区一室一厅46平方</a></span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+                <div>
+                    <span class="attribute-text">房源地址：</span>
+                    <span class="info-text">北京市xxx区</span>
+                </div>
+            </div>
+            <div>
+                <span class="glyphicon glyphicon-heart" style="color:red"></span>
+                <span class="info-text">15556人浏览</span>
+            </div>
+        </div>
+        <!--右侧-->
+        <div class="col-md-2 col-lg-2">
+            <div class="price">
+                <span class="price-text">￥2000</span>
+                <span class="price-unit">元/月</span>
+            </div>
+            <div class="house-contact">
+                <a href>
+                    <button type="button" class="btn btn-primary">联系房东</button>
+                </a>
+            </div>
+
+            <div class="icon-img">
+                <a href="#"><span class="glyphicon glyphicon-arrow-right" style="color: blue"></span></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--分页-->
+<div class="row text-center">
+    <nav aria-label="Page navigation">
+        <div class="container">
+            <ul class="pagination" style="">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a href="#">第1页</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#">9</a></li>
+                <li><a href="#">最后1页</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>热门</title>
+</head>
+ <style>
+        .responsive-img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+<body>
+<div class="container">
+    {% for house in house_hot_list %}
+        <div class="col-lg-3">
+            <div class="course">
+                <a href="/house/{{ house.id }}">
+                    <img class="img-fluid img-box responsive-img" src="../static/img/house-bg1.jpg"
+                         alt="{{ house.title }}" style="max-width: 100%; height: auto;">
+                </a>
+            </div>
+            <div class="course-info">
+                <div class="course-title">
+                    <span>{{ house.address }}</span>
+                </div>
+            </div>
+            <div class="course-info1">
+                <span>{{ house.rooms }}室-{{ house.area }}平方米</span>
+                <span style="color: red"><i class="fa fa-heart"
+                                            aria-hidden="true"></i>&nbsp;热度{{ house.page_views }}</span>
+                <span class="price float-right">￥{{ house.price }}</span>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+</body>
+</html>

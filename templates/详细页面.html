@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>详细页面</title>
+    <!-- 图标 -->
+    <link rel="icon" href="{{ url_for('static', filename='ico/favicon.ico') }}">
+    <!-- 引入 Bootstrap 文件的 CSS -->
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入 ECharts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../static/js/echarts.min.js"></script>
+    <!-- 引入 Bootstrap 的 JavaScript -->
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 自定义 CSS -->
+    <link rel="stylesheet" href="../static/css/all.css">
+</head>
+<body>
+<div class="container">
+    <!-- 房屋图片和基本信息 -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <!-- 房屋图片轮播 -->
+            <div class="house-details">
+                <!-- 房屋标题 -->
+                <strong style="font-size: 28px;">密云-宾阳-宾阳北里2室2厅</strong>
+                <!-- 图片轮播 -->
+                <div class="panel panel-default">
+                    <div id="carousel-example-generic" class="carousel slide house-carousel" data-ride="carousel">
+                        <!-- 轮播图片 -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <img src="../static/img/house-bg1.jpg" alt="" class="img-responsive">
+                            </div>
+                            <div class="item">
+                                <img src="https://img.zcool.cn/community/01a4d65c6656b0a801203d226ab16d.png@3000w_1l_0o_100sh.png"
+                                     alt="" class="img-responsive">
+                            </div>
+                            <div class="item">
+                                <img src="https://www.2008php.com/2023_Website_appreciate/2023-06-30/20230630170104.jpg"
+                                     alt="" class="img-responsive">
+                            </div>
+                        </div>
+                        <!-- 左右箭头 -->
+                        <a class="left carousel-control" href="#carousel-example-generic" role="button"
+                           data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">上一张</span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" role="button"
+                           data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">下一张</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- 价格信息 -->
+                <div class="row">
+                    <span style="color: red;">￥10000/月</span>
+                    <p class="pull-right">
+                        <button type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-map-marker" style="color: red;"></span> 地图
+                        </button>
+                        <button type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-heart" style="color: yellow;"></span> 收藏
+                        </button>
+                    </p>
+                </div>
+            </div>
+            <!-- 房屋基本信息 -->
+            <div class="house-info">
+                <h4 style="border-bottom: 1px solid red;">基本信息</h4>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <p><span class="glyphicon glyphicon-home"></span> 户型：2室2厅</p>
+                        <p><span class="glyphicon glyphicon-th-large"></span> 面积：120m²</p>
+                        <p><span class="glyphicon glyphicon-map-marker"></span> 朝向：南</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <p><span class="glyphicon glyphicon-map-marker"></span> 区域：密云-宾阳-宾阳北里</p>
+                        <p><span class="glyphicon glyphicon-bed"></span> 租住类型：整租</p>
+                        <p><span class="glyphicon glyphicon-earphone"></span> 联系电话: 123456789</p>
+                    </div>
+
+                </div>
+                <h4>房屋卖点</h4>
+                <p>交通：
+                    <span>暂无提供</span>
+                </p>
+                <p>优势条件：
+                    <span>
+                            密云好房出租 独立2居价格便宜 采光好 精装修  随时看房 方便
+                        </span>
+                </p>
+            </div>
+        </div>
+        <!-- 可视化图表 -->
+        <div class="col-lg-6 col-md-6" style="margin-top: 100px;">
+            <!-- 价格趋势 -->
+            <div class="price-title">
+                <p class="pull-right">
+                    <span class="glyphicon glyphicon-align-right"></span> 价格趋势
+                </p>
+            </div>
+            <div id="price-trend-chart" style="height: 280px;"></div>
+            <!-- 户型占比 -->
+            <div class="row">
+                <span class="glyphicon glyphicon-align-right"></span>
+                <p style="display: inline-block; margin-top: 122px; border-bottom: 1px solid #dddddd;">宾阳-宾阳 户型占比</p>
+            </div>
+
+            <div class="row">
+                <div id="pie-chart-container" style="height: 180px;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 房屋配套信息 -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6" style="margin-left: -20px;">
+            <!-- 房源配套资源 -->
+            <div class="attribute-header">
+                <h4>房源配套资源</h4>
+                <p style="border-bottom: 1px solid #dddddd;"></p>
+            </div>
+            <div class="row house-attribute">
+                <div class="col-lg-2 col-md-2">
+                    <span class="icon-1"></span>
+                    <span class="attribute-text-sm">冰箱</span>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <span class="icon-2"></span>
+                    <span class="attribute-text-sm">洗衣机</span>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <span class="icon-3"></span>
+                    <span class="attribute-text-sm">电视</span>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <span class="icon-4"></span>
+                    <span class="attribute-text-sm">空调</span>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <span class="icon-5"></span>
+                    <span class="attribute-text-sm">暖气</span>
+                </div>
+            </div>
+            <div class="row house-attribute">
+                <div class="col-lg-2 col-md-2">
+                    <span class="icon-6"></span>
+                    <span class="attribute-text-sm">热水器</span>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <span class="icon-7"></span>
+                    <span class="attribute-text-sm">天然气</span>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <span class="icon-8"></span>
+                    <span class="attribute-text-sm">床</span>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <span class="icon-9"></span>
+                    <span class="attribute-text-sm">WiFi</span>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <span class="icon-10"></span>
+                    <span class="attribute-text-sm">电梯</span>
+                </div>
+            </div>
+        </div>
+        <!-- 可视化图表 -->
+        <div class="col-lg-6 col-md-6">
+            <div id="house-resource-chart" style="height: 260px; width: auto;"></div>
+        </div>
+    </div>
+    <!-- 推荐房源 -->
+    <div class="row" style="margin-left: -40px;">
+        <div class="col-lg-8 col-md-8" style=" margin-right: -230px;">
+            <div class="attribute-header">
+                <h4>推荐房源</h4>
+            </div>
+            <div class="row">
+                <!-- 第一个房源卡片 -->
+                <div class="col-lg-4 col-md-4">
+                    <div class="card">
+                        <img src="../static/img/house-bg1.jpg" class=" img-fluid img-thumbnail" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">北京市朝阳区</h5>
+                            <p>
+                                <span class="pull-left">2室1厅40m²</span>
+                                <span class="pull-right" style="color: red">9000/月</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第二个房源卡片 -->
+                <div class="col-lg-4 col-md-4">
+                    <div class="card">
+                        <img src="https://www.hnkjxy.net.cn/attachment/core/label/2021_05/19_11/4bf46c85d2ff750c.jpg"
+                             class=" img-fluid img-thumbnail" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">长沙市天心区</h5>
+                            <p>
+                                <span class="pull-left">3室2厅120m²</span>
+                                <span class="pull-right" style="color: red">4000/月</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第三个房源卡片 -->
+                <div class="col-lg-4 col-md-4">
+                    <div class="card">
+                        <img src="https://th.bing.com/th/id/OSK.HEROLDbmOpihfidj_2cXVpTMZFsswo0xq0k09nW2w5F8wLk?rs=1&pid=ImgDetMain"
+                             class=" img-fluid img-thumbnail" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">杭州市西湖区</h5>
+                            <p>
+                                <span class="pull-left">3室1厅70m²</span>
+                                <span class="pull-right" style="color: red">7000/月</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- 第四个房源卡片 -->
+                <div class="col-lg-4 col-md-4">
+                    <div class="card">
+                        <img src="../static/img/house-bg1.jpg" class=" img-fluid img-thumbnail" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">北京市朝阳区</h5>
+                            <p>
+                                <span class="pull-left">2室2厅120m²</span>
+                                <span class="pull-right" style="color: red">6000/月</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第五个房源卡片 -->
+                <div class="col-lg-4 col-md-4">
+                    <div class="card">
+                        <img src="../static/img/house-bg1.jpg" class=" img-fluid img-thumbnail" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">北京市朝阳区</h5>
+                            <p>
+                                <span class="pull-left">2室2厅120m²</span>
+                                <span class="pull-right" style="color: red">6000/月</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第六个房源卡片 -->
+                <div class="col-lg-4 col-md-4">
+                    <div class="card">
+                        <img src="../static/img/house-bg1.jpg" class=" img-fluid img-thumbnail" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">北京市朝阳区</h5>
+                            <p>
+                                <span class="pull-left">2室2厅120m²</span>
+                                <span class="pull-right" style="color: red">6000/月</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 可视化图表 -->
+        <div class="col-lg-4 col-md-4" style="margin-top: 100px; margin-left: 220px">
+            <div id="hot-recommend-chart" style="height: 290px;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //价格趋势折线图
+    var priceData = [
+        {time: '2023-01', value: 6000},
+        {time: '2023-02', value: 6500},
+        {time: '2023-03', value: 7000},
+        {time: '2023-04', value: 7500},
+        {time: '2023-05', value: 8000},
+        {time: '2023-06', value: 8500},
+        {time: '2023-07', value: 9000},
+
+
+        {time: '2023-08', value: 9500},
+        {time: '2023-09', value: 10000},
+        {time: '2023-10', value: 10500},
+        {time: '2023-11', value: 11000},
+        {time: '2023-12', value: 11500}
+    ];
+    $(document).ready(function () {
+        var chartDom = document.getElementById('price-trend-chart');
+        var myChart = echarts.init(chartDom);
+
+        var option = {
+            title: {
+                text: '价格趋势',
+                subtext: '2023年1-12月'
+            },
+            xAxis: {
+                type: 'category',
+                data: priceData.map(item => item.time),
+                axisLabel: {
+                    rotate: 45
+                }
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: priceData.map(item => item.value),
+                type: 'line',
+                color: 'pink'
+            }],
+            tooltip: {
+                trigger: 'axis',
+                show: true
+            },
+        };
+        myChart.setOption(option);
+    });
+    // 房屋类型饼图
+    var houseTypeData = [
+        {name: '一室二厅', value: 30},
+        {name: '二室二厅', value: 50},
+        {name: '三室一厅', value: 20},
+        {name: '三室二厅', value: 15},
+        {name: '四室二厅', value: 10},
+        {name: '其他', value: 10}
+
+    ];
+    $(document).ready(function () {
+        var pieChartContainer = document.getElementById('pie-chart-container');
+        var pieChart = echarts.init(pieChartContainer);
+
+        var option = {
+            title: {
+                text: '宾阳-宾阳 户型占比',
+                left: 'center',
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c} ({d}%)',
+                show: true,
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: houseTypeData.map(item => item.name),
+            },
+            series: [{
+                name: '户型分布',
+                type: 'pie',
+                center: ['50%', '50%'],
+                radius: ['60%'],
+                data: houseTypeData,
+            }],
+        };
+        pieChart.setOption(option);
+    });
+    // 房屋资源折线图数据
+    var houseResourceData = [
+        {time: '2023-01', value: 10},
+        {time: '2023-02', value: 20},
+        {time: '2023-03', value: 30},
+        {time: '2023-04', value: 40},
+        {time: '2023-05', value: 70},
+        {time: '2023-06', value: 80}
+    ];
+    $(document).ready(function () {
+        var chartDom = document.getElementById('house-resource-chart');
+        var myChart = echarts.init(chartDom);
+
+        var option = {
+            title: {
+                text: '房屋资源变化',
+                subtext: '2023年1-6月'
+            },
+
+            xAxis: {
+                type: 'value'
+            },
+            yAxis: {
+                type: 'category',
+
+                data: houseResourceData.map(item => item.time),
+                axisLabel: {
+                    formatter: function (value) {
+                        return value.split('-')[1] + '月';
+                    }
+                }
+
+            },
+            series: [{
+                data: houseResourceData.map(item => item.value),
+                type: 'bar',
+                itemStyle: {
+                    color: 'pink',
+                },
+                label: {
+                    show: true,
+                    color: 'black',
+                    position: 'right',
+                    fontSize: 12,
+                    formatter: '{c}'
+                }
+            }]
+        };
+        myChart.setOption(option);
+    });
+    // 热门推荐
+    var hotRecommendData = [
+        {name: '北京市朝阳区', value: 100},
+        {name: '上海市浦东新区', value: 200},
+        {name: '深圳市南山区', value: 300},
+        {name: '广州市天河区', value: 150},
+        {name: '成都市武侯区', value: 250},
+        {name: '杭州市西湖区', value: 180},
+        {name: '南京市鼓楼区', value: 220},
+        {name: '北京市海淀区', value: 280},
+        {name: '北京市东城区', value: 320},
+        {name: '北京市顺义区', value: 350},
+        {name: '长沙市天心区', value: 380}
+    ];
+    $(document).ready(function () {
+        var chartDom = document.getElementById('hot-recommend-chart');
+        var charts = echarts.init(chartDom);
+        var option = {
+            title: {
+                text: '热门房源推荐',
+                left: 'center'
+            },
+
+            xAxis: {
+                type: 'category',
+                data: hotRecommendData.map(item => item.name),
+            },
+            yAxis: {
+                type: 'value',
+            },
+            label: {
+                show: true,
+                position: 'top',
+                color: 'pink'
+            },
+            tooltip: {
+                trigger: 'axis',
+                show: true,
+            },
+            series: [
+                {
+                    name: '房源热度',
+                    type: 'line',
+                    data: hotRecommendData.map(item => item.value),
+                    color: 'pink'
+                }
+            ]
+        };
+        charts.setOption(option);
+    });
+
+
+</script>
+
+</body>
+</html>

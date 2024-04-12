@@ -1,0 +1,26 @@
+.login {
+    width: 380px;
+    margin: 150px auto;
+    border: 1px solid #ddd;
+    padding: 0 15px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    display: inline;
+    margin: 0 5px;
+}
+
+.thumbnail-info {
+    margin-top: 15px;
+}
+
+.thumbnail-info h4 {
+    margin-top: 0;
+}
